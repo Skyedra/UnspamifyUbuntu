@@ -15,15 +15,9 @@ When running APT:
 
 To get rid of the spam, uninstall the program generating the spam.
 
-The package that generates this spam is `ubuntu-advantage-tools`.  Unfortunately removing it is tricky since Ubuntu devs 
-have decided to make this a required system package so they can make more money 
-([yes, that is their official justification](https://bugs.launchpad.net/ubuntu/+source/ubuntu-meta/+bug/1930914/comments/11)).
+The package that generates this spam is `ubuntu-advantage-tools`.  Unfortunately removing it is tricky since Ubuntu devs have decided to make this a required system package so they can make more money ([yes, that is their official justification](https://bugs.launchpad.net/ubuntu/+source/ubuntu-meta/+bug/1930914/comments/11)).
 
-A clever person named vi0oss 
-[came up with a workaround](https://old.reddit.com/r/assholedesign/comments/yg97tk/ubuntu_includes_ads_in_system_update_theyre/iuj7hug/):  
-replace the spammy package with an additional package which `Provides`, `Breaks` and `Conflicts` with `ubuntu-advantage-tools`.  
-When this fix broke due to Ubuntu devs requiring a later versionn, gamemanj found a workaround.  All this has been
-bundled into the latest version linked below.
+A clever person named vi0oss [came up with a workaround](https://old.reddit.com/r/assholedesign/comments/yg97tk/ubuntu_includes_ads_in_system_update_theyre/iuj7hug/):  replace the spammy package with an additional package which `Provides`, `Breaks` and `Conflicts` with `ubuntu-advantage-tools`.  When this fix broke due to Ubuntu devs requiring a later versionn, [gamemanj](https://old.reddit.com/r/assholedesign/comments/yg97tk/ubuntu_includes_ads_in_system_update_theyre/jbxyq01/) found a second workaround.  All this has been bundled into the latest version linked below.
 
 1. Download the fake package [here](https://github.com/Skyedra/UnspamifyUbuntu/blob/master/fake-ubuntu-advantage-tools/fake-ubuntu-advantage-tools.deb?raw=true).
 2. (Optional)  Verify package with `dpkg -I fake-ubuntu-advantage-tools.deb` to check the metadata to see how it works:
