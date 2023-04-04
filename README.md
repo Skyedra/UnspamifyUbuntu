@@ -11,7 +11,7 @@ When running APT:
 > Try Ubuntu Pro beta with a free personal subscription on up to 5 machines.
 > Learn more at https://ubuntu.com/pro
 
-## Removal Instructions
+## Removal Instructions -- Option 1: Remove Ubuntu Advantage
 
 To get rid of the spam, uninstall the program generating the spam.
 
@@ -49,7 +49,15 @@ The following NEW packages will be installed:
 5. No more ads!
 
 
+## Removal Instructions -- Option 2: Set Flag
 
+If you need to keep Ubuntu Advantage installed (for instance, because you are using Ubuntu Pro extended support), you can use this somewhat secret command to hide the ads:
+
+```
+sudo pro config set apt_news=false
+```
+
+If you don't need pro features, I recommend Option 1 instead as the flag isn't well documented and may change in future (or I personally think it likely ubuntu advantage may add more types of spam with different flags in future requiring more undocumented flags be set.  Removing the source of the spam as in Option 1 seems more likely to fully nip the problem in the bud).
 
 # Remove ESM MOTD Spam 
 
