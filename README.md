@@ -11,6 +11,14 @@ When running APT:
 > Try Ubuntu Pro beta with a free personal subscription on up to 5 machines.
 > Learn more at https://ubuntu.com/pro
 
+Additionally, step 5 also resolves this motd ad:
+
+>  * Introducing Expanded Security Maintenance for Applications.
+>   Receive updates to over 25,000 software packages with your
+>   Ubuntu Pro subscription. Free for personal use.
+>
+>     https://ubuntu.com/pro
+
 ## Removal Instructions -- Option 1: Remove Ubuntu Advantage
 
 To get rid of the spam, uninstall the program generating the spam.
@@ -46,7 +54,11 @@ The following NEW packages will be installed:
   fake-ubuntu-advantage-tools
 0 upgraded, 1 newly installed, 1 to remove and 1 not upgraded.
 ```
-5. No more ads!
+5. Remove previously downloaded MOTD ads:
+```
+rm /var/lib/ubuntu-advantage/messages/motd-esm-announce
+```
+6. No more ads!
 
 
 ## Removal Instructions -- Option 2: Set Flag
