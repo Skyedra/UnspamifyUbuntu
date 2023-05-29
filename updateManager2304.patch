@@ -1,0 +1,32 @@
+44c44
+< from uaclient.api.u.pro.packages.updates.v1 import updates
+---
+> #from uaclient.api.u.pro.packages.updates.v1 import updates
+278,288c278,288
+<     def _get_ua_security_status(self):
+<         self.ua_security_packages = []
+<         try:
+<             update_result = updates()
+<         except (IOError, OSError):
+<             return
+<         for info in update_result.updates:
+<             if info.status == "pending_attach":
+<                 self.ua_security_packages.append(
+<                     (info.package, info.version, info.download_size)
+<                 )
+---
+>     #def _get_ua_security_status(self):
+>     #    self.ua_security_packages = []
+>     #    try:
+>     #        update_result = updates()
+>     #    except (IOError, OSError):
+>     #        return
+>     #    for info in update_result.updates:
+>     #        if info.status == "pending_attach":
+>     #            self.ua_security_packages.append(
+>     #                (info.package, info.version, info.download_size)
+>     #            )
+459c459
+<         self._get_ua_security_status()
+---
+>         #self._get_ua_security_status()
