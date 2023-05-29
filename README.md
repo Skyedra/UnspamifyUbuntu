@@ -11,7 +11,7 @@ When running APT:
 > Try Ubuntu Pro beta with a free personal subscription on up to 5 machines.
 > Learn more at https://ubuntu.com/pro
 
-## Removal Instructions
+## Removal Instructions -- Option 1: Remove Ubuntu Advantage
 
 To get rid of the spam, uninstall the program generating the spam.
 
@@ -49,9 +49,17 @@ The following NEW packages will be installed:
 5. No more ads!
 
 
+## Removal Instructions -- Option 2: Set Flag
 
+If you need to keep Ubuntu Advantage installed (for instance, because you are using Ubuntu Pro extended support), you can use this somewhat secret command to hide the ads:
 
-# Remove ESM MOTD Spam 
+```
+sudo pro config set apt_news=false
+```
+
+If you don't need pro features, I recommend Option 1 instead as the flag isn't well documented and may change in future (or I personally think it likely ubuntu advantage may add more types of spam with different flags in future requiring more undocumented flags be set.  Removing the source of the spam as in Option 1 seems more likely to fully nip the problem in the bud).
+
+# Remove ESM Apps MOTD Spam 
 
 ## Spam Example
 
@@ -109,3 +117,37 @@ On login, messages like this:
 ```
 sudo sed -i 's/^ENABLED=.*/ENABLED=0/' /etc/default/motd-news
 ```
+
+
+# Remove MOTD ESM Announce Spam
+
+## Spam Example
+
+On login, messages like this:
+
+>  * Introducing Expanded Security Maintenance for Applications.
+>   Receive updates to over 25,000 software packages with your
+>   Ubuntu Pro subscription. Free for personal use.
+>
+>     https://ubuntu.com/pro
+
+## Removal Instructions
+
+### Option 1:  Remove UA + Cache
+
+This method is best if you don't use ubuntu ESM / don't need ubuntu pro.
+
+1. Follow [previous instructions](https://github.com/Skyedra/UnspamifyUbuntu#removal-instructions----option-1-remove-ubuntu-advantage) to remove ubuntu advantage and instead use the fake ubuntu advantage package.  
+
+2. Remove previously downloaded/cached MOTD ads:
+```
+rm /var/lib/ubuntu-advantage/messages/motd-esm-announce
+```
+
+### Option 2:  Modify motd hooks
+If you need ubuntu advantage installed for some reason, you might try modifying `/etc/update-motd.d/88-esm-annouce` so it does not return anything.  For instance, making the top of the file like:
+```
+#!/bin/sh
+exit 0
+```
+should remove the spam.  Using this method, you may get update conflicts to resolve when/if ubuntu changes this file.  (Unfortunately, they don't appear to have made this type of spam configurable, like they did the update-motd spam.)
