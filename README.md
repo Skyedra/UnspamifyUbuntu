@@ -48,6 +48,16 @@ The following NEW packages will be installed:
 ```
 5. No more ads!
 
+### Patch Update Manager (for Ubuntu 23.04+ only)
+UpdateManager in Ubuntu 23.04 now hooks into ubuntu advantage.  Chabala submitted a patch to make update manager function independently again.
+
+First, test the patch can be applied cleanly:
+
+`wget -O - "https://raw.githubusercontent.com/Skyedra/UnspamifyUbuntu/master/updateManager2304.patch" | patch /usr/lib/python3/dist-packages/UpdateManager/UpdateManager.py --dry-run`
+
+If that doesn't cause any errors, remove the --dry-run option to actually apply it:
+
+`wget -O - "https://raw.githubusercontent.com/Skyedra/UnspamifyUbuntu/master/updateManager2304.patch" | patch /usr/lib/python3/dist-packages/UpdateManager/UpdateManager.py`
 
 ## Removal Instructions -- Option 2: Set Flag
 
