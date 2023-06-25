@@ -23,16 +23,17 @@ A clever person named vi0oss [came up with a workaround](https://old.reddit.com/
 2. (Optional)  Verify package with `dpkg -I fake-ubuntu-advantage-tools.deb` to check the metadata to see how it works:
 ```
  new Debian package, version 2.0.
- size 744 bytes: control archive=384 bytes.
-     300 bytes,     8 lines      control              
+ size 658 bytes: control archive=387 bytes.
+     550 bytes,     9 lines      control              
  Package: fake-ubuntu-advantage-tools 
- Version: 0.1
+ Version: 0.3
  Architecture: all
- Conflicts: ubuntu-advantage-tools
- Breaks: ubuntu-advantage-tools
- Provides: ubuntu-advantage-tools
+ Conflicts: ubuntu-advantage-tools, ubuntu-advantage-desktop-daemon
+ Breaks: ubuntu-advantage-tools, ubuntu-advantage-desktop-daemon
+ Provides: ubuntu-advantage-tools (= 65535:65535), ubuntu-advantage-desktop-daemon (= 65535:65535)
  Description: Ban ubuntu-advantage-tools while satisfying ubuntu-minimal dependency
- Maintainer: Vitaly _Vi Shukela
+ Maintainer: Originally by Vitaly _Vi Shukela <vi0oss@gmail.com>, this one updated by Skye with fix idea by gamemanj
+ Homepage: https://github.com/Skyedra/UnspamifyUbuntu
 ```
 3. (Optional) Verify package with `dpkg -c fake-ubuntu-advantage-tools.deb` to check it's actually empty:
 ```
