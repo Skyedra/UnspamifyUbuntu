@@ -1,9 +1,9 @@
 Package: fake-ubuntu-advantage-tools 
-Version: 0.2
+Version: 0.3
 Architecture: all
-Conflicts: ubuntu-advantage-tools
-Breaks: ubuntu-advantage-tools
-Provides: ubuntu-advantage-tools (= 65535)
+Conflicts: ubuntu-advantage-tools, ubuntu-advantage-desktop-daemon
+Breaks: ubuntu-advantage-tools, ubuntu-advantage-desktop-daemon
+Provides: ubuntu-advantage-tools (= 65535:65535), ubuntu-advantage-desktop-daemon (= 65535:65535)
 Description: Ban ubuntu-advantage-tools while satisfying ubuntu-minimal dependency
 Maintainer: Originally by Vitaly _Vi Shukela <vi0oss@gmail.com>, this one updated by Skye with fix idea by gamemanj
 Homepage: https://github.com/Skyedra/UnspamifyUbuntu
