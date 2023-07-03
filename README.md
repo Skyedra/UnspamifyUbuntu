@@ -49,7 +49,7 @@ The following NEW packages will be installed:
 ```
 5. No more ads!
 
-### Patch Update Manager (for Ubuntu 23.04+ only)
+### Patch Update Manager (for Ubuntu 23.04+ Desktop only)
 UpdateManager in Ubuntu 23.04 now hooks into ubuntu advantage.  Chabala submitted a patch to make update manager function independently again.
 
 First, test the patch can be applied cleanly:
