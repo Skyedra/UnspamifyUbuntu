@@ -49,6 +49,22 @@ The following NEW packages will be installed:
 ```
 5. No more ads!
 
+### (Ubuntu 23.04+ only)  Prevent APT trying to start spammy uninstalled services
+
+You may start to get these warnings:
+
+```
+root@lab:~# apt update
+Failed to start apt-news.service: Unit apt-news.service is masked.
+Failed to start esm-cache.service: Unit esm-cache.service not found.
+```
+
+You can resolve this by disabling the spam hooks in APT:
+
+```
+sudo mv /etc/apt/apt.conf.d/20apt-esm-hook.conf /etc/apt/apt.conf.d/20apt-esm-hook.conf.disabled
+```
+
 ### Patch Update Manager (for Ubuntu 23.04+ Desktop only)
 UpdateManager in Ubuntu 23.04 now hooks into ubuntu advantage.  Chabala submitted a patch to make update manager function independently again.
 
