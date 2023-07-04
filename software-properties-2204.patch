@@ -1,0 +1,442 @@
+--- /lib/python3/dist-packages/softwareproperties/gtk/SoftwarePropertiesGtk.py.orig
++++ /lib/python3/dist-packages/softwareproperties/gtk/SoftwarePropertiesGtk.py
+@@ -54,7 +54,6 @@
+ from .DialogEdit import DialogEdit
+ from .DialogCacheOutdated import DialogCacheOutdated
+ from .DialogAddSourcesList import DialogAddSourcesList
+-from .UbuntuProPage import UbuntuProPage
+ 
+ import softwareproperties
+ import softwareproperties.distro
+@@ -1658,4 +1657,4 @@
+             self.label_driver_action.set_label(_("No proprietary drivers are in use."))
+ 
+     def init_ubuntu_pro(self):
+-        self.ubuntu_pro_page = UbuntuProPage(self)
++        pass
+--- /usr/share/software-properties/gtkbuilder/main.ui.orig
++++ /usr/share/software-properties/gtkbuilder/main.ui
+@@ -1234,423 +1234,6 @@
+                 <property name="tab_fill">False</property>
+               </packing>
+             </child>
+-            <child>
+-              <object class="GtkStack" id="stack_ua_main">
+-                <property name="visible">True</property>
+-                <child>
+-                  <object class="GtkBox" id="box_ua_options">
+-                    <property name="visible">True</property>
+-                    <property name="border_width">12</property>
+-                    <property name="orientation">vertical</property>
+-                    <property name="spacing">12</property>
+-                    <child>
+-                      <object class="GtkLabel">
+-                        <property name="visible">True</property>
+-                        <property name="label" translatable="yes">&lt;b&gt;Subscription&lt;/b&gt;</property>
+-                        <property name="use_markup">True</property>
+-                        <property name="wrap">True</property>
+-                        <property name="max_width_chars">1</property>
+-                        <property name="xalign">0</property>
+-                      </object>
+-                    </child>
+-                    <child>
+-                      <object class="GtkFrame">
+-                        <property name="visible">True</property>
+-                        <child>
+-                          <object class="GtkBox">
+-                            <property name="visible">True</property>
+-                            <property name="spacing">36</property>
+-                            <property name="margin">18</property>
+-                            <child>
+-                              <object class="GtkImage" id="image_ubuntu_pro_logo">
+-                                <property name="visible">True</property>
+-                              </object>
+-                            </child>
+-                            <child>
+-                              <object class="GtkStack" id="stack_ua_attach">
+-                                <property name="visible">True</property>
+-                                <child>
+-                                  <object class="GtkBox" id="box_ua_unattached">
+-                                    <property name="visible">True</property>
+-                                    <property name="spacing">24</property>
+-                                    <child>
+-                                      <object class="GtkButton" id="button_ua_attach">
+-                                        <property name="visible">True</property>
+-                                        <property name="valign">center</property>
+-                                        <property name="label" translatable="yes">_Enable Ubuntu Pro</property>
+-                                        <property name="use_underline">True</property>
+-                                      </object>
+-                                    </child>
+-                                    <child>
+-                                      <object class="GtkLabel">
+-                                        <property name="visible">True</property>
+-                                        <property name="label" translatable="yes">&lt;b&gt;This machine is not covered by an Ubuntu Pro subscription.&lt;/b&gt;
+-Receive security updates for over 25,000 Ubuntu packages, free for up to 5 machines. &lt;a href="https://ubuntu.com/pro"&gt;Learn more&lt;/a&gt;.</property>
+-                                        <property name="use_markup">True</property>
+-                                        <property name="wrap">True</property>
+-                                        <property name="max-width-chars">90</property>
+-                                        <property name="xalign">0</property>
+-                                      </object>
+-                                    </child>
+-                                  </object>
+-                                </child>
+-                                <child>
+-                                  <object class="GtkBox" id="box_ua_attached">
+-                                    <property name="visible">True</property>
+-                                    <property name="spacing">24</property>
+-                                    <child>
+-                                      <object class="GtkButton" id="button_ua_detach">
+-                                        <property name="visible">True</property>
+-                                        <property name="valign">center</property>
+-                                        <property name="label" translatable="yes">_Disable Ubuntu Pro</property>
+-                                        <property name="use_underline">True</property>
+-                                      </object>
+-                                    </child>
+-                                    <child>
+-                                      <object class="GtkBox">
+-                                        <property name="visible">True</property>
+-                                        <property name="spacing">6</property>
+-                                        <child>
+-                                          <object class="GtkImage">
+-                                            <property name="visible">True</property>
+-                                            <property name="icon-name">emblem-default</property>
+-                                          </object>
+-                                        </child>
+-                                        <child>
+-                                          <object class="GtkLabel">
+-                                            <property name="visible">True</property>
+-                                            <property name="use_markup">True</property>
+-                                            <property name="label" translatable="yes">&lt;span foreground="green"&gt;Ubuntu Pro support is enabled&lt;/span&gt;</property>
+-                                            <property name="xalign">0</property>
+-                                          </object>
+-                                        </child>
+-                                      </object>
+-                                    </child>
+-                                  </object>
+-                                </child>
+-                              </object>
+-                            </child>
+-                          </object>
+-                        </child>
+-                      </object>
+-                    </child>
+-                    <child>
+-                      <object class="GtkLabel">
+-                        <property name="visible">True</property>
+-                        <property name="can_focus">False</property>
+-                        <property name="label" translatable="yes">&lt;b&gt;Security&lt;/b&gt;</property>
+-                        <property name="use_markup">True</property>
+-                        <property name="wrap">True</property>
+-                        <property name="max_width_chars">1</property>
+-                        <property name="xalign">0</property>
+-                      </object>
+-                    </child>
+-                    <child>
+-                      <object class="GtkGrid">
+-                        <property name="visible">True</property>
+-                        <property name="row_spacing">12</property>
+-                        <property name="column_spacing">12</property>
+-                        <child>
+-                          <object class="GtkSwitch" id="switch_ua_esm_infra">
+-                            <property name="visible">True</property>
+-                            <property name="halign">start</property>
+-                            <property name="valign">center</property>
+-                          </object>
+-                          <packing>
+-                            <property name="left_attach">0</property>
+-                            <property name="top_attach">0</property>
+-                          </packing>
+-                        </child>
+-                        <child>
+-                          <object class="GtkLabel" id="label_ua_esm_infra">
+-                            <property name="visible">True</property>
+-                            <property name="use_markup">True</property>
+-                            <property name="valign">center</property>
+-                            <property name="xalign">0</property>
+-                          </object>
+-                          <packing>
+-                            <property name="left_attach">1</property>
+-                            <property name="top_attach">0</property>
+-                          </packing>
+-                        </child>
+-                        <child>
+-                          <object class="GtkLabel" id="label_ua_esm_infra_error">
+-                            <property name="visible">False</property>
+-                            <property name="valign">center</property>
+-                            <property name="xalign">0</property>
+-                            <attributes>
+-                              <attribute name="foreground" value="red"/>
+-                              <attribute name="scale" value="0.9"/>
+-                            </attributes>
+-                          </object>
+-                          <packing>
+-                            <property name="left_attach">1</property>
+-                            <property name="top_attach">1</property>
+-                          </packing>
+-                        </child>
+-                        <child>
+-                          <object class="GtkSwitch" id="switch_ua_esm_apps">
+-                            <property name="visible">True</property>
+-                            <property name="halign">start</property>
+-                            <property name="valign">center</property>
+-                          </object>
+-                          <packing>
+-                            <property name="left_attach">0</property>
+-                            <property name="top_attach">2</property>
+-                          </packing>
+-                        </child>
+-                        <child>
+-                          <object class="GtkLabel" id="label_ua_esm_apps">
+-                            <property name="visible">True</property>
+-                            <property name="use_markup">True</property>
+-                            <property name="xalign">0</property>
+-                          </object>
+-                          <packing>
+-                            <property name="left_attach">1</property>
+-                            <property name="top_attach">2</property>
+-                          </packing>
+-                        </child>
+-                        <child>
+-                          <object class="GtkLabel" id="label_ua_esm_apps_error">
+-                            <property name="visible">False</property>
+-                            <property name="xalign">0</property>
+-                            <attributes>
+-                              <attribute name="foreground" value="red"/>
+-                              <attribute name="scale" value="0.9"/>
+-                            </attributes>
+-                          </object>
+-                          <packing>
+-                            <property name="left_attach">1</property>
+-                            <property name="top_attach">3</property>
+-                          </packing>
+-                        </child>
+-                        <child>
+-                          <object class="GtkSwitch" id="switch_ua_livepatch">
+-                            <property name="visible">True</property>
+-                            <property name="halign">start</property>
+-                            <property name="valign">center</property>
+-                          </object>
+-                          <packing>
+-                            <property name="left_attach">0</property>
+-                            <property name="top_attach">4</property>
+-                          </packing>
+-                        </child>
+-                        <child>
+-                          <object class="GtkLabel" id="label_ua_livepatch">
+-                            <property name="visible">True</property>
+-                            <property name="label" translatable="yes">&lt;b&gt;Kernel Livepatch&lt;/b&gt; helps keep your system secure by applying security updates that don't require a restart.</property>
+-                            <property name="use_markup">True</property>
+-                            <property name="xalign">0</property>
+-                          </object>
+-                          <packing>
+-                            <property name="left_attach">1</property>
+-                            <property name="top_attach">4</property>
+-                          </packing>
+-                        </child>
+-                        <child>
+-                          <object class="GtkLabel" id="label_ua_livepatch_error">
+-                            <property name="visible">False</property>
+-                            <property name="xalign">0</property>
+-                            <attributes>
+-                              <attribute name="foreground" value="red"/>
+-                              <attribute name="scale" value="0.9"/>
+-                            </attributes>
+-                          </object>
+-                          <packing>
+-                            <property name="left_attach">1</property>
+-                            <property name="top_attach">5</property>
+-                          </packing>
+-                        </child>
+-                        <child>
+-                          <object class="GtkCheckButton" id="checkbutton_livepatch_topbar">
+-                            <property name="visible">True</property>
+-                            <property name="label" translatable="yes">Show Livepatch status in the top bar</property>
+-                            <property name="sensitive">False</property>
+-                            <property name="halign">start</property>
+-                            <property name="draw_indicator">True</property>
+-                          </object>
+-                          <packing>
+-                            <property name="left_attach">1</property>
+-                            <property name="top_attach">6</property>
+-                          </packing>
+-                        </child>
+-                      </object>
+-                    </child>
+-                    <child>
+-                      <object class="GtkFrame">
+-                        <property name="visible">True</property>
+-                        <child>
+-                          <object class="GtkExpander" id="expander_compliance_and_hardening">
+-                            <property name="visible">True</property>
+-                            <property name="margin">18</property>
+-                            <child type="label">
+-                              <object class="GtkBox">
+-                                <property name="visible">True</property>
+-                                <property name="orientation">vertical</property>
+-                                <property name="spacing">12</property>
+-                                <child>
+-                                  <object class="GtkLabel">
+-                                    <property name="visible">True</property>
+-                                    <property name="label" translatable="yes">&lt;b&gt;Compliance &amp;amp; Hardening&lt;/b&gt;</property>
+-                                    <property name="use_markup">True</property>
+-                                    <property name="xalign">0</property>
+-                                  </object>
+-                                </child>
+-                                <child>
+-                                  <object class="GtkLabel">
+-                                    <property name="visible">True</property>
+-                                    <property name="label" translatable="yes">Only recommended to assist with FedRAMP, HIPAA, and other compliance and hardening requirements. Includes FIPS 140-2 certified modules, DISA-STIG, CIS and Common Criteria.</property>
+-                                    <property name="wrap">True</property>
+-                                    <property name="xalign">0</property>
+-                                    <property name="max-width-chars">90</property>
+-                                  </object>
+-                                </child>
+-                              </object>
+-                            </child>
+-                            <child>
+-                              <object class="GtkGrid">
+-                                <property name="visible">True</property>
+-                                <property name="orientation">vertical</property>
+-                                <property name="row_spacing">12</property>
+-                                <property name="column_spacing">12</property>
+-                                <property name="margin_top">12</property>
+-                                <child>
+-                                  <object class="GtkButton" id="button_ua_fips">
+-                                    <property name="visible">True</property>
+-                                    <property name="width_request">160</property>
+-                                    <child>
+-                                      <object class="GtkLabel">
+-                                        <property name="visible">True</property>
+-                                        <property name="label" translatable="yes">Enable _FIPS</property>
+-                                        <property name="use_underline">True</property>
+-                                      </object>
+-                                    </child>
+-                                  </object>
+-                                  <packing>
+-                                    <property name="left_attach">0</property>
+-                                    <property name="top_attach">0</property>
+-                                  </packing>
+-                                </child>
+-                                <child>
+-                                  <object class="GtkLabel" id="label_ua_fips_status">
+-                                    <property name="visible">True</property>
+-                                    <property name="label" translatable="yes">&lt;b&gt;FIPS 140-2&lt;/b&gt;</property>
+-                                    <property name="use_markup">True</property>
+-                                    <property name="xalign">0</property>
+-                                  </object>
+-                                  <packing>
+-                                    <property name="left_attach">1</property>
+-                                    <property name="top_attach">0</property>
+-                                  </packing>
+-                                </child>
+-                                <child>
+-                                  <object class="GtkLabel" id="label_ua_fips_description">
+-                                    <property name="visible">True</property>
+-                                    <property name="label" translatable="yes">A US and Canada government cryptographic module certification of compliance with the FIPS 140-2 data protection standard. &lt;a href="https://ubuntu.com/security/certifications/docs/fips"&gt;FIPS documentation&lt;/a&gt;</property>
+-                                    <property name="use_markup">True</property>
+-                                    <property name="wrap">True</property>
+-                                    <property name="xalign">0</property>
+-                                    <property name="max-width-chars">75</property>
+-                                  </object>
+-                                  <packing>
+-                                    <property name="left_attach">1</property>
+-                                    <property name="top_attach">1</property>
+-                                  </packing>
+-                                </child>
+-                                <child>
+-                                  <object class="GtkButton" id="button_ua_usg">
+-                                    <property name="visible">True</property>
+-                                    <property name="width_request">160</property>
+-                                    <child>
+-                                      <object class="GtkLabel" id="label_ua_usg_button">
+-                                        <property name="visible">True</property>
+-                                        <property name="label" translatable="yes">Enable _USG</property>
+-                                        <property name="use_underline">True</property>
+-                                      </object>
+-                                    </child>
+-                                  </object>
+-                                  <packing>
+-                                    <property name="left_attach">0</property>
+-                                    <property name="top_attach">2</property>
+-                                  </packing>
+-                                </child>
+-                                <child>
+-                                  <object class="GtkLabel" id="label_ua_usg_status">
+-                                    <property name="visible">True</property>
+-                                    <property name="label" translatable="yes">&lt;b&gt;Ubuntu Security Guide (USG)&lt;/b&gt;</property>
+-                                    <property name="use_markup">True</property>
+-                                    <property name="xalign">0</property>
+-                                  </object>
+-                                  <packing>
+-                                    <property name="left_attach">1</property>
+-                                    <property name="top_attach">2</property>
+-                                  </packing>
+-                                </child>
+-                                <child>
+-                                  <object class="GtkLabel" id="label_ua_usg_description">
+-                                    <property name="visible">True</property>
+-                                    <property name="label" translatable="yes">Automates hardening and auditing with CIS benchmark and DISA-STIG profiles while allowing for environment-specific customizations. &lt;a href="https://ubuntu.com/security/certifications/docs/usg"&gt;USG documentation&lt;/a&gt;</property>
+-                                    <property name="use_markup">True</property>
+-                                    <property name="wrap">True</property>
+-                                    <property name="xalign">0</property>
+-                                    <property name="max-width-chars">75</property>
+-                                  </object>
+-                                  <packing>
+-                                    <property name="left_attach">1</property>
+-                                    <property name="top_attach">3</property>
+-                                  </packing>
+-                                </child>
+-                              </object>
+-                            </child>
+-                          </object>
+-                        </child>
+-                      </object>
+-                    </child>
+-                  </object>
+-                  <packing>
+-                    <property name="position">6</property>
+-                  </packing>
+-                </child>
+-                <child>
+-                  <object class="GtkBox" id="box_ua_fips_setup">
+-                    <property name="visible">True</property>
+-                    <child>
+-                      <object class="GtkBox">
+-                        <property name="visible">True</property>
+-                        <property name="orientation">vertical</property>
+-                        <property name="spacing">18</property>
+-                        <property name="expand">True</property>
+-                        <property name="halign">center</property>
+-                        <property name="valign">center</property>
+-                        <child>
+-                          <object class="GtkSpinner">
+-                            <property name="visible">True</property>
+-                            <property name="active">True</property>
+-                          </object>
+-                        </child>
+-                        <child>
+-                          <object class="GtkLabel">
+-                            <property name="visible">True</property>
+-                            <property name="label" translatable="yes">Setting up FIPS</property>
+-                          </object>
+-                        </child>
+-                      </object>
+-                    </child>
+-                  </object>
+-                </child>
+-              </object>
+-            </child>
+-            <child type="tab">
+-              <object class="GtkLabel">
+-                <property name="visible">True</property>
+-                <property name="can_focus">False</property>
+-                <property name="label">Ubuntu Pro</property>
+-              </object>
+-              <packing>
+-                <property name="position">6</property>
+-                <property name="tab_fill">False</property>
+-              </packing>
+-            </child>
+           </object>
+           <packing>
+             <property name="expand">True</property>
