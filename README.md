@@ -49,7 +49,7 @@ The following NEW packages will be installed:
 ```
 5. No more ads!
 
-### (Ubuntu 23.04+ only)  Prevent APT trying to start spammy uninstalled services
+### Prevent APT trying to start spammy uninstalled services
 
 You may start to get these warnings:
 
