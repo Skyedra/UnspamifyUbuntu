@@ -77,7 +77,7 @@ If that doesn't cause any errors, remove the --dry-run option to actually apply 
 `wget -O - "https://raw.githubusercontent.com/Skyedra/UnspamifyUbuntu/master/updateManager2304.patch" | patch /usr/lib/python3/dist-packages/UpdateManager/UpdateManager.py`
 
 ### Patch Software Properties GTK (for Ubuntu 22.04 Desktop only, not later)
-`software-properties-gtk` now hooks into ubuntu advantage and will cause a crash.  Muggenhor and reneas submitted patches to make it function independently again.
+`software-properties-gtk` now hooks into ubuntu advantage and crashes itself on start without it.  Muggenhor and reneas submitted patches to make it function independently again.
 
 First, test the patch can be applied cleanly:
 
