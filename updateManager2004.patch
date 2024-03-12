@@ -1,0 +1,5 @@
+458c458,459
+<         self._get_ua_security_status()
+---
+>         # self._get_ua_security_status()
+>         print('PATCH: skipped Ubuntu Advantage check (UnspamifyUbuntu)')
