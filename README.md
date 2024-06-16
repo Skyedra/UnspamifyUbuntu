@@ -31,6 +31,7 @@ A clever person named vi0oss [came up with a workaround](https://old.reddit.com/
  Conflicts: ubuntu-advantage-tools, ubuntu-advantage-desktop-daemon
  Breaks: ubuntu-advantage-tools, ubuntu-advantage-desktop-daemon
  Provides: ubuntu-advantage-tools (= 65535:65535), ubuntu-advantage-desktop-daemon (= 65535:65535)
+ Depends: distro-info (>= 0.18ubuntu0.18.04.1)
  Description: Ban ubuntu-advantage-tools while satisfying ubuntu-minimal dependency
  Maintainer: Originally by Vitaly _Vi Shukela <vi0oss@gmail.com>, this one updated by Skye with fix idea by gamemanj
  Homepage: https://github.com/Skyedra/UnspamifyUbuntu
