@@ -1,0 +1,28 @@
+--- /usr/lib/python3/dist-packages/UpdateManager/UpdateManager.py.orig	2025-06-25 15:15:56.941726136 +0300
++++ /usr/lib/python3/dist-packages/UpdateManager/UpdateManager.py	2025-06-25 15:16:49.440516383 +0300
+@@ -27,7 +27,7 @@
+ from gi.repository import Gio
+ from gi.repository import GLib
+ from gi.repository import GObject
+-import uaclient.api.u.pro.packages.updates.v1 as ua
++# import uaclient.api.u.pro.packages.updates.v1 as ua
+ 
+ GdkX11  # pyflakes
+ 
+@@ -272,11 +272,11 @@
+                 self.oem_metapackages.add(pkg)
+ 
+     def _fetch_ua_updates(self):
+-        try:
+-            self.ua_updates = ua.updates().updates
+-        except Exception as e:
+-            print("Error running updates end-point: ", e)
+-            self.ua_updates = []
++        # try:
++        #     self.ua_updates = ua.updates().updates
++        # except Exception as e:
++        #     print("Error running updates end-point: ", e)
++        self.ua_updates = []
+ 
+     def _get_ua_security_status(self):
+         self.ua_security_packages = []
