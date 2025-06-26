@@ -65,14 +65,20 @@ You can resolve this by disabling the spam hooks in APT:
 sudo mv /etc/apt/apt.conf.d/20apt-esm-hook.conf /etc/apt/apt.conf.d/20apt-esm-hook.conf.disabled
 ```
 
-### Patch Update Manager (for Ubuntu 23.04+ Desktop only)
+### Patch Update Manager
+
+Known supported versions:
+- 20.04 Desktop (`updateManager2004.patch`)
+- 22.04 Desktop (`updateManager2204.patch`)
+- 23.04 Desktop (`updateManager2304.patch`)
+
 UpdateManager in Ubuntu 23.04 now hooks into ubuntu advantage.  Chabala submitted a patch to make update manager function independently again.
 
-First, test the patch can be applied cleanly:
+First, test the patch can be applied cleanly (replace `updateManager2304.patch` with the patch for your version):
 
 `wget -O - "https://raw.githubusercontent.com/Skyedra/UnspamifyUbuntu/master/updateManager2304.patch" | patch /usr/lib/python3/dist-packages/UpdateManager/UpdateManager.py --dry-run`
 
-If that doesn't cause any errors, remove the --dry-run option to actually apply it:
+If that doesn't cause any errors, remove the `--dry-run` option to actually apply it:
 
 `wget -O - "https://raw.githubusercontent.com/Skyedra/UnspamifyUbuntu/master/updateManager2304.patch" | patch /usr/lib/python3/dist-packages/UpdateManager/UpdateManager.py`
 
