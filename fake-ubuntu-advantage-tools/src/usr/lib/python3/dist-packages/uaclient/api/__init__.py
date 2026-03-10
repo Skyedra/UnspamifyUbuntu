@@ -1,0 +1,1 @@
+"""Stub module for uaclient.api - minimal implementation to prevent crashes."""

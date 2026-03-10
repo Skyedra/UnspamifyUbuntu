@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=com.canonical.UbuntuAdvantage
+Exec=/usr/lib/ubuntu-advantage/ua-dbus-stub
+User=root

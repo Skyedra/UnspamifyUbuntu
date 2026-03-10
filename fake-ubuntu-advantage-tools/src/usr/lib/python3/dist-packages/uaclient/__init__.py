@@ -1,0 +1,1 @@
+"""Stub implementation of uaclient to prevent crashes when ubuntu-advantage-tools is removed."""

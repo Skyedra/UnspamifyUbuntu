@@ -1,9 +1,13 @@
-Package: fake-ubuntu-advantage-tools 
-Version: 0.4
+Package: fake-ubuntu-advantage-tools
+Version: 0.5
 Architecture: all
 Conflicts: ubuntu-advantage-tools, ubuntu-advantage-desktop-daemon, ubuntu-pro-client
 Breaks: ubuntu-advantage-tools, ubuntu-advantage-desktop-daemon, ubuntu-pro-client
 Provides: ubuntu-advantage-tools (= 65535:65535), ubuntu-advantage-desktop-daemon (= 65535:65535), ubuntu-pro-client (= 65535:65535)
-Description: Ban ubuntu-advantage-tools while satisfying ubuntu-minimal dependency
-Maintainer: Originally by Vitaly _Vi Shukela <vi0oss@gmail.com>, this one updated by Skye with fix idea by gamemanj
+Description: Stub replacement for ubuntu-advantage-tools that prevents advertisements
+ This package provides minimal Python stubs for the uaclient module to prevent
+ crashes in Ubuntu system tools (UpdateManager, software-properties-gtk) when
+ ubuntu-advantage-tools is not installed. No patches needed - just install this
+ package to remove Ubuntu Pro advertisements while keeping system tools working.
+Maintainer: Originally by Vitaly _Vi Shukela <vi0oss@gmail.com>, this one updated by Skye with fix ideas by gamemanj and johanneswilm
 Homepage: https://github.com/Skyedra/UnspamifyUbuntu

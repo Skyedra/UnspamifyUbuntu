@@ -1,0 +1,1 @@
+"""Ubuntu Advantage Client API stub - packages.updates module"""

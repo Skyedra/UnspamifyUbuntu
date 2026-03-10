@@ -1,0 +1,54 @@
+# Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Debian package build artifacts
+*.deb
+*.buildinfo
+*.changes
+
+# Keep the pre-built package in the repo
+!fake-ubuntu-advantage-tools/fake-ubuntu-advantage-tools.deb
+
+# Test output
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Temporary files
+*.tmp
+*.bak
+*.orig

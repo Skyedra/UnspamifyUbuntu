@@ -1,0 +1,22 @@
+#!/bin/sh
+set -e
+
+# Kill any running old instances of the D-Bus stub
+if [ "$1" = "configure" ] || [ "$1" = "abort-upgrade" ] || [ "$1" = "abort-deconfigure" ] || [ "$1" = "abort-remove" ]; then
+    # Stop old D-Bus stub instances
+    pkill -f ua-dbus-stub 2>/dev/null || true
+    
+    # Give it a moment to stop
+    sleep 1
+    
+    # Reload D-Bus system daemon to pick up the new service configuration
+    if [ -x /bin/systemctl ]; then
+        systemctl reload dbus 2>/dev/null || true
+    elif [ -x /etc/init.d/dbus ]; then
+        /etc/init.d/dbus reload 2>/dev/null || true
+    fi
+fi
+
+#DEBHELPER#
+
+exit 0

@@ -1,6 +1,4 @@
-This page illustrates a number of steps to remove unwanted spam from Ubuntu.  
-
-(In future, I would like to automate these steps by providing a command line program)
+This page illustrates a number of steps to remove unwanted spam from Ubuntu.
 
 # Remove Ubuntu APT Spam
 
@@ -11,35 +9,44 @@ When running APT:
 > Try Ubuntu Pro beta with a free personal subscription on up to 5 machines.
 > Learn more at https://ubuntu.com/pro
 
-## Removal Instructions -- Option 1: Remove Ubuntu Advantage
+## Removal Instructions -- Option 1: Install fake-ubuntu-advantage-tools (Recommended)
 
-To get rid of the spam, uninstall the program generating the spam.
+To get rid of the spam, replace the program generating the spam with a stub package.
 
-The package that generates this spam is `ubuntu-advantage-tools`.  Unfortunately removing it is tricky since Ubuntu devs have decided to make this a required system package so they can make more money ([yes, that is their official justification](https://bugs.launchpad.net/ubuntu/+source/ubuntu-meta/+bug/1930914/comments/11)).
+The package that generates this spam is `ubuntu-advantage-tools`. Unfortunately removing it is tricky since Ubuntu devs have decided to make this a required system package so they can make more money ([yes, that is their official justification](https://bugs.launchpad.net/ubuntu/+source/ubuntu-meta/+bug/1930914/comments/11)).
 
-A clever person named vi0oss [came up with a workaround](https://old.reddit.com/r/assholedesign/comments/yg97tk/ubuntu_includes_ads_in_system_update_theyre/iuj7hug/):  replace the spammy package with an additional package which `Provides`, `Breaks` and `Conflicts` with `ubuntu-advantage-tools`.  When this fix broke due to Ubuntu devs requiring a later versionn, [gamemanj](https://old.reddit.com/r/assholedesign/comments/yg97tk/ubuntu_includes_ads_in_system_update_theyre/jbxyq01/) found a second workaround.  All this has been bundled into the latest version linked below.
+A clever person named vi0oss [came up with a workaround](https://old.reddit.com/r/assholedesign/comments/yg97tk/ubuntu_includes_ads_in_system_update_theyre/iuj7hug/): replace the spammy package with an additional package which `Provides`, `Breaks` and `Conflicts` with `ubuntu-advantage-tools`. When this fix broke due to Ubuntu devs requiring a later version, [gamemanj](https://old.reddit.com/r/assholedesign/comments/yg97tk/ubuntu_includes_ads_in_system_update_theyre/jbxyq01/) found a second workaround.
+
+The package includes minimal Python stubs that prevent crashes in Ubuntu system tools (UpdateManager, software-properties-gtk) that try to import ubuntu-advantage-tools modules. **No patches needed anymore!**
 
 1. Download the fake package [here](https://github.com/Skyedra/UnspamifyUbuntu/blob/master/fake-ubuntu-advantage-tools/fake-ubuntu-advantage-tools.deb?raw=true).
-2. (Optional)  Verify package with `dpkg -I fake-ubuntu-advantage-tools.deb` to check the metadata to see how it works:
+2. (Optional) Verify package with `dpkg -I fake-ubuntu-advantage-tools.deb` to check the metadata:
 ```
  new Debian package, version 2.0.
- size 658 bytes: control archive=387 bytes.
-     550 bytes,     9 lines      control              
- Package: fake-ubuntu-advantage-tools 
- Version: 0.3
+ size 1998 bytes: control archive=592 bytes.
+     989 bytes,    14 lines      control
+ Package: fake-ubuntu-advantage-tools
+ Version: 1.0
  Architecture: all
- Conflicts: ubuntu-advantage-tools, ubuntu-advantage-desktop-daemon
- Breaks: ubuntu-advantage-tools, ubuntu-advantage-desktop-daemon
- Provides: ubuntu-advantage-tools (= 65535:65535), ubuntu-advantage-desktop-daemon (= 65535:65535)
- Description: Ban ubuntu-advantage-tools while satisfying ubuntu-minimal dependency
+ Conflicts: ubuntu-advantage-tools, ubuntu-advantage-desktop-daemon, ubuntu-pro-client
+ Breaks: ubuntu-advantage-tools, ubuntu-advantage-desktop-daemon, ubuntu-pro-client
+ Provides: ubuntu-advantage-tools (= 65535:65535), ubuntu-advantage-desktop-daemon (= 65535:65535), ubuntu-pro-client (= 65535:65535)
+ Description: Stub replacement for ubuntu-advantage-tools that prevents advertisements
+  This package provides minimal Python stubs for the uaclient module to prevent
+  crashes in Ubuntu system tools (UpdateManager, software-properties-gtk) when
+  ubuntu-advantage-tools is not installed. No patches needed - just install this
+  package to remove Ubuntu Pro advertisements while keeping system tools working.
  Maintainer: Originally by Vitaly _Vi Shukela <vi0oss@gmail.com>, this one updated by Skye with fix idea by gamemanj
  Homepage: https://github.com/Skyedra/UnspamifyUbuntu
 ```
-3. (Optional) Verify package with `dpkg -c fake-ubuntu-advantage-tools.deb` to check it's actually empty:
+3. (Optional) Verify package contents with `dpkg -c fake-ubuntu-advantage-tools.deb` to see the Python stubs it installs:
 ```
-drwxr-xr-x root/root         0 2022-10-31 11:58 ./
+./usr/lib/python3/dist-packages/uaclient/__init__.py
+./usr/lib/python3/dist-packages/uaclient/api/...
+./usr/lib/python3/dist-packages/uaclient/api/u/pro/packages/updates/v1.py
+(and other stub files)
 ```
-4. Install the package:  `apt install ./fake-ubuntu-advantage-tools.deb`
+4. Install the package: `apt install ./fake-ubuntu-advantage-tools.deb`
 ```
 The following packages will be REMOVED:
   ubuntu-advantage-tools
@@ -47,7 +54,11 @@ The following NEW packages will be installed:
   fake-ubuntu-advantage-tools
 0 upgraded, 1 newly installed, 1 to remove and 1 not upgraded.
 ```
-5. No more ads!
+5. **That's it!** No more ads and no patches needed! The Python stubs in the package ensure that UpdateManager and other system tools continue to work without modifications.
+
+Optional:  The real `ubuntu-advantage-tools` seems to be the only package that depends on `distro-info`.  It does not appear to
+be necessary to keep this tool, but if you want it, you can explicitly keep it installed via `apt install distro-info`.
+If you do not, your system may prompt you to automatically remove it later on.
 
 ### Prevent APT trying to start spammy uninstalled services
 
@@ -65,34 +76,6 @@ You can resolve this by disabling the spam hooks in APT:
 sudo mv /etc/apt/apt.conf.d/20apt-esm-hook.conf /etc/apt/apt.conf.d/20apt-esm-hook.conf.disabled
 ```
 
-### Patch Update Manager
-
-Known supported versions:
-- 20.04 Desktop (`updateManager2004.patch`)
-- 22.04 Desktop (`updateManager2204.patch`)
-- 23.04 Desktop (`updateManager2304.patch`)
-
-UpdateManager in Ubuntu 23.04 now hooks into ubuntu advantage.  Chabala submitted a patch to make update manager function independently again.
-
-First, test the patch can be applied cleanly (replace `updateManager2304.patch` with the patch for your version):
-
-`wget -O - "https://raw.githubusercontent.com/Skyedra/UnspamifyUbuntu/master/updateManager2304.patch" | patch /usr/lib/python3/dist-packages/UpdateManager/UpdateManager.py --dry-run`
-
-If that doesn't cause any errors, remove the `--dry-run` option to actually apply it:
-
-`wget -O - "https://raw.githubusercontent.com/Skyedra/UnspamifyUbuntu/master/updateManager2304.patch" | patch /usr/lib/python3/dist-packages/UpdateManager/UpdateManager.py`
-
-### Patch Software Properties GTK (for Ubuntu 22.04 Desktop only, not later)
-`software-properties-gtk` now hooks into ubuntu advantage and crashes itself on start without it.  Muggenhor and reneas submitted patches to make it function independently again.
-
-First, test the patch can be applied cleanly:
-
-`wget -O - "https://raw.githubusercontent.com/Skyedra/UnspamifyUbuntu/master/software-properties-2204.patch" | patch -d/ -p0 --dry-run`
-
-If that doesn't cause any errors, remove the --dry-run option to actually apply it:
-
-`wget -O - "https://raw.githubusercontent.com/Skyedra/UnspamifyUbuntu/master/software-properties-2204.patch" | patch -d/ -p0`
-
 ## Removal Instructions -- Option 2: Set Flag
 
 If you need to keep Ubuntu Advantage installed (for instance, because you are using Ubuntu Pro extended support), you can use this somewhat secret command to hide the ads:
@@ -102,6 +85,12 @@ sudo pro config set apt_news=false
 ```
 
 If you don't need pro features, I recommend Option 1 instead as the flag isn't well documented and may change in future (or I personally think it likely ubuntu advantage may add more types of spam with different flags in future requiring more undocumented flags be set.  Removing the source of the spam as in Option 1 seems more likely to fully nip the problem in the bud).
+
+## Removal Instructions -- Option 3: Non-stub package (deprecated)
+
+Similar to option #1, we also provide [instructions](fake-ubuntu-advantage-tools-legacy-nonstub) on how to swap ubuntu-advantage-tools out with a fake package that
+contains no code.  However, this requires making modifications to software properties & update manager so it is no
+longer recommended.
 
 # Remove ESM Apps MOTD Spam 
 

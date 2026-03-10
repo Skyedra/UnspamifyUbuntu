@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+# Reload D-Bus after removal to clean up the service
+if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+    # Reload D-Bus system daemon
+    if [ -x /bin/systemctl ]; then
+        systemctl reload dbus 2>/dev/null || true
+    elif [ -x /etc/init.d/dbus ]; then
+        /etc/init.d/dbus reload 2>/dev/null || true
+    fi
+fi
+
+#DEBHELPER#
+
+exit 0
