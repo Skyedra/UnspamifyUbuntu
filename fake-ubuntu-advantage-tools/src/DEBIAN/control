@@ -9,5 +9,5 @@ Description: Stub replacement for ubuntu-advantage-tools that prevents advertise
  crashes in Ubuntu system tools (UpdateManager, software-properties-gtk) when
  ubuntu-advantage-tools is not installed. No patches needed - just install this
  package to remove Ubuntu Pro advertisements while keeping system tools working.
-Maintainer: Originally by Vitaly _Vi Shukela <vi0oss@gmail.com>, this one updated by Skye with fix ideas by gamemanj and johanneswilm
+Maintainer: Originally by Vitaly _Vi Shukela <vi0oss@gmail.com>, this one updated by Skye with fix ideas by 20kdc and johanneswilm
 Homepage: https://github.com/Skyedra/UnspamifyUbuntu

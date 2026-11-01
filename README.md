@@ -15,7 +15,7 @@ To get rid of the spam, replace the program generating the spam with a stub pack
 
 The package that generates this spam is `ubuntu-advantage-tools`. Unfortunately removing it is tricky since Ubuntu devs have decided to make this a required system package so they can make more money ([yes, that is their official justification](https://bugs.launchpad.net/ubuntu/+source/ubuntu-meta/+bug/1930914/comments/11)).
 
-A clever person named vi0oss [came up with a workaround](https://old.reddit.com/r/assholedesign/comments/yg97tk/ubuntu_includes_ads_in_system_update_theyre/iuj7hug/): replace the spammy package with an additional package which `Provides`, `Breaks` and `Conflicts` with `ubuntu-advantage-tools`. When this fix broke due to Ubuntu devs requiring a later version, [gamemanj](https://old.reddit.com/r/assholedesign/comments/yg97tk/ubuntu_includes_ads_in_system_update_theyre/jbxyq01/) found a second workaround.
+A clever person named vi0oss [came up with a workaround](https://old.reddit.com/r/assholedesign/comments/yg97tk/ubuntu_includes_ads_in_system_update_theyre/iuj7hug/): replace the spammy package with an additional package which `Provides`, `Breaks` and `Conflicts` with `ubuntu-advantage-tools`. When this fix broke due to Ubuntu devs requiring a later version, [20kdc](https://old.reddit.com/r/assholedesign/comments/yg97tk/ubuntu_includes_ads_in_system_update_theyre/jbxyq01/) found a second workaround.
 
 The package includes minimal Python stubs that prevent crashes in Ubuntu system tools (UpdateManager, software-properties-gtk) that try to import ubuntu-advantage-tools modules. **No patches needed anymore!**
 
@@ -36,7 +36,7 @@ The package includes minimal Python stubs that prevent crashes in Ubuntu system 
   crashes in Ubuntu system tools (UpdateManager, software-properties-gtk) when
   ubuntu-advantage-tools is not installed. No patches needed - just install this
   package to remove Ubuntu Pro advertisements while keeping system tools working.
- Maintainer: Originally by Vitaly _Vi Shukela <vi0oss@gmail.com>, this one updated by Skye with fix idea by gamemanj
+ Maintainer: Originally by Vitaly _Vi Shukela <vi0oss@gmail.com>, this one updated by Skye with fix idea by 20kdc
  Homepage: https://github.com/Skyedra/UnspamifyUbuntu
 ```
 3. (Optional) Verify package contents with `dpkg -c fake-ubuntu-advantage-tools.deb` to see the Python stubs it installs:
