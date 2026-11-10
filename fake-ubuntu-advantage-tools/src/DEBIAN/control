@@ -1,5 +1,5 @@
 Package: fake-ubuntu-advantage-tools
-Version: 0.5
+Version: 0.6
 Architecture: all
 Conflicts: ubuntu-advantage-tools, ubuntu-advantage-desktop-daemon, ubuntu-pro-client
 Breaks: ubuntu-advantage-tools, ubuntu-advantage-desktop-daemon, ubuntu-pro-client
