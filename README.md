@@ -92,6 +92,27 @@ Similar to option #1, we also provide [instructions](fake-ubuntu-advantage-tools
 contains no code.  However, this requires making modifications to software properties & update manager so it is no
 longer recommended.
 
+# Remove Software Updater Livepatch Spam
+
+## Spam Example
+
+In Software Updater (desktop only), after it has been opened a few times:
+
+> **Tip:** You can use Livepatch with Ubuntu Pro to keep your computer more secure between restarts.
+
+## Removal Instructions
+
+There is no setting for this tip, so make `_is_livepatch_supported` in `/usr/lib/python3/dist-packages/UpdateManager/Dialogs.py` return `False`:
+
+```
+sudo sed -i 's/^    def _is_livepatch_supported(self):$/&\n        return False/' \
+  /usr/lib/python3/dist-packages/UpdateManager/Dialogs.py
+```
+
+This will be reverted when update-manager is updated, so you may need to run it again.
+
+Suggested by [helpdeskdan](https://github.com/Skyedra/UnspamifyUbuntu/issues/11)
+
 # Remove ESM Apps MOTD Spam 
 
 ## Spam Example
