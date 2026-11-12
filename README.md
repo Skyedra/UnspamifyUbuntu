@@ -107,9 +107,21 @@ On login, messages like this:
 
 ## Removal Instructions
 
-These messages are defined in `/usr/lib/update-notifier/apt_check.py` with no flags to disable them.
+### Option 1: Marker file (Recommended)
 
-Here's a sed command that will neuter the functions that generate the messages by inserting a return statement as the first line of the message function:
+`update-notifier` hides these messages if `/var/lib/update-notifier/hide-esm-in-motd` exists.
+This survives package upgrades.
+
+```
+sudo touch /var/lib/update-notifier/hide-esm-in-motd
+sudo /usr/lib/update-notifier/update-motd-updates-available --force
+```
+
+Suggested by [rrotter](https://github.com/Skyedra/UnspamifyUbuntu/issues/9#issuecomment-2168509399)
+
+### Option 2: Patch apt_check.py
+
+If your update-notifier is too old to support the marker file, this sed command neuters the functions that generate the messages in `/usr/lib/update-notifier/apt_check.py` by inserting a return statement as the first line of the message function (this will be reverted when update-notifier is updated):
 
 ```
 sudo sed -Ezi.orig \
