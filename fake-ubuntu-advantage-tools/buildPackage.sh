@@ -28,9 +28,19 @@ fi
 echo "✓ Source directory structure verified"
 echo ""
 
-# Build the package
+# Stage a copy with normalized permissions
+STAGE=$(mktemp -d)
+trap 'rm -rf "$STAGE"' EXIT
+cp -r ./src "$STAGE/pkg"
+find "$STAGE/pkg" -name __pycache__ -type d -prune -exec rm -rf {} +
+find "$STAGE/pkg" -type d -exec chmod 0755 {} +
+find "$STAGE/pkg" -type f -exec chmod 0644 {} +
+chmod 0755 "$STAGE/pkg/DEBIAN/postinst" "$STAGE/pkg/DEBIAN/postrm" \
+    "$STAGE/pkg/usr/lib/ubuntu-advantage/ua-dbus-stub"
+
+# Build the package (files must be owned by root, not the builder's uid)
 echo "Building .deb package..."
-dpkg -b ./src fake-ubuntu-advantage-tools.deb
+dpkg-deb --root-owner-group -b "$STAGE/pkg" fake-ubuntu-advantage-tools.deb
 
 echo ""
 echo "=========================================="

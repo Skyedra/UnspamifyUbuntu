@@ -1,6 +1,17 @@
 #!/bin/sh
 set -e
 
+# Fix perms on dirs created by versions before 0.6
+if [ "$1" = "configure" ]; then
+    for d in /usr/lib/python3/dist-packages/uaclient /usr/lib/ubuntu-advantage; do
+        if [ -d "$d" ]; then
+            find "$d" -name __pycache__ -type d -prune -exec rm -rf {} +
+            chown -R root:root "$d"
+            chmod -R go-w "$d"
+        fi
+    done
+fi
+
 # Kill any running old instances of the D-Bus stub
 if [ "$1" = "configure" ] || [ "$1" = "abort-upgrade" ] || [ "$1" = "abort-deconfigure" ] || [ "$1" = "abort-remove" ]; then
     # Stop old D-Bus stub instances
