@@ -19,7 +19,7 @@ A clever person named vi0oss [came up with a workaround](https://old.reddit.com/
 
 The package includes minimal Python stubs that prevent crashes in Ubuntu system tools (UpdateManager, software-properties-gtk) that try to import ubuntu-advantage-tools modules. **No patches needed anymore!**
 
-1. Download the fake package [here](https://github.com/Skyedra/UnspamifyUbuntu/blob/master/fake-ubuntu-advantage-tools/fake-ubuntu-advantage-tools.deb?raw=true).
+1. Download the fake package [here](https://github.com/Skyedra/UnspamifyUbuntu/releases/latest/download/fake-ubuntu-advantage-tools.deb).
 2. (Optional) Verify package with `dpkg -I fake-ubuntu-advantage-tools.deb` to check the metadata:
 ```
  new Debian package, version 2.0.
@@ -239,3 +239,14 @@ If you need ubuntu advantage installed for some reason, you might try modifying 
 exit 0
 ```
 should remove the spam.  Using this method, you may get update conflicts to resolve when/if ubuntu changes this file.  (Unfortunately, they don't appear to have made this type of spam configurable, like they did the update-motd spam.)
+
+# Making a Release
+
+1. Bump `Version:` in `fake-ubuntu-advantage-tools/src/DEBIAN/control` (e.g. `Version: 0.7`) and merge to `master`.
+2. Tag the merged commit with that same version (e.g. `v0.7`) and push the tag:
+```
+git tag v0.7
+git push origin v0.7
+```
+
+CI then builds and tests the tagged commit and publishes the `.deb` as a [release](https://github.com/Skyedra/UnspamifyUbuntu/releases).

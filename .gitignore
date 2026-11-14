@@ -40,9 +40,6 @@ env/
 *.buildinfo
 *.changes
 
-# Keep the pre-built package in the repo
-!fake-ubuntu-advantage-tools/fake-ubuntu-advantage-tools.deb
-
 # Test output
 .pytest_cache/
 .coverage
