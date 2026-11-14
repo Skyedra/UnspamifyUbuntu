@@ -46,14 +46,24 @@ The package includes minimal Python stubs that prevent crashes in Ubuntu system 
 ./usr/lib/python3/dist-packages/uaclient/api/u/pro/packages/updates/v1.py
 (and other stub files)
 ```
-4. Install the package: `apt install ./fake-ubuntu-advantage-tools.deb`
+4. Install the package: `sudo apt install ./fake-ubuntu-advantage-tools.deb`
 ```
 The following packages will be REMOVED:
-  ubuntu-advantage-tools
+  ubuntu-advantage-desktop-daemon ubuntu-pro-client
 The following NEW packages will be installed:
   fake-ubuntu-advantage-tools
-0 upgraded, 1 newly installed, 1 to remove and 1 not upgraded.
+0 upgraded, 1 newly installed, 2 to remove and 0 not upgraded.
+...
+dpkg: ubuntu-pro-client: dependency problems, but removing anyway as you requested:
+ update-manager-core depends on ubuntu-pro-client.
+ software-properties-gtk depends on ubuntu-pro-client.
+...
+N: Download is performed unsandboxed as root as file '/home/user/fake-ubuntu-advantage-tools.deb' couldn't be accessed by user '_apt'. - pkgAcquire::Run (13: Permission denied)
 ```
+Use `apt` instead of `dpkg -i` because dpkg won't remove the conflicting packages and will refuse to install.
+The `dependency problems` warning is expected (the fake package satisfies those dependencies once installed),
+and the `unsandboxed` notice is shown for any local `.deb` that the `_apt` user can't read; both are harmless.
+
 5. **That's it!** No more ads and no patches needed! The Python stubs in the package ensure that UpdateManager and other system tools continue to work without modifications.
 
 Optional:  The real `ubuntu-advantage-tools` seems to be the only package that depends on `distro-info`.  It does not appear to
