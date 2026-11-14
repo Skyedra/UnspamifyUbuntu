@@ -70,6 +70,17 @@ Optional:  The real `ubuntu-advantage-tools` seems to be the only package that d
 be necessary to keep this tool, but if you want it, you can explicitly keep it installed via `apt install distro-info`.
 If you do not, your system may prompt you to automatically remove it later on.
 
+### Purge leftover configuration and cached ads
+
+Removing the package leaves its config files (including the APT hook below) and `/var/lib/ubuntu-advantage`,
+which holds cached ads such as the MOTD and APT news messages. Purge them with:
+
+```
+sudo apt purge ubuntu-advantage-tools ubuntu-pro-client ubuntu-advantage-desktop-daemon
+```
+
+Suggested by [dampfklon](https://github.com/Skyedra/UnspamifyUbuntu/issues/3)
+
 ### Prevent APT trying to start spammy uninstalled services
 
 You may start to get these warnings:
@@ -80,7 +91,8 @@ Failed to start apt-news.service: Unit apt-news.service is masked.
 Failed to start esm-cache.service: Unit esm-cache.service not found.
 ```
 
-You can resolve this by disabling the spam hooks in APT:
+Purging the packages as mentioned above removes these hooks.
+Alternatively, you can disable the spam hooks in APT:
 
 ```
 sudo mv /etc/apt/apt.conf.d/20apt-esm-hook.conf /etc/apt/apt.conf.d/20apt-esm-hook.conf.disabled
@@ -215,9 +227,9 @@ This method is best if you don't use ubuntu ESM / don't need ubuntu pro.
 
 1. Follow [previous instructions](https://github.com/Skyedra/UnspamifyUbuntu#removal-instructions----option-1-remove-ubuntu-advantage) to remove ubuntu advantage and instead use the fake ubuntu advantage package.  
 
-2. Remove previously downloaded/cached MOTD ads:
+2. Remove previously downloaded/cached MOTD ads by [purging the old packages](#purge-leftover-configuration-and-cached-ads), or just:
 ```
-rm /var/lib/ubuntu-advantage/messages/motd-esm-announce
+sudo rm /var/lib/ubuntu-advantage/messages/motd-esm-announce
 ```
 
 ### Option 2:  Modify motd hooks
