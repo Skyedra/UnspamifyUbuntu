@@ -1,0 +1,109 @@
+name: Build deb
+
+on:
+  push:
+    branches: [master]
+    # Path filters don't apply to tag pushes
+    tags: ["v*"]
+    paths:
+      - "fake-ubuntu-advantage-tools/**"
+      - "test_stubs.py"
+      - "test_install.sh"
+      - ".github/workflows/build-deb.yml"
+  pull_request:
+    paths:
+      - "fake-ubuntu-advantage-tools/**"
+      - "test_stubs.py"
+      - "test_install.sh"
+      - ".github/workflows/build-deb.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.meta.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build package
+        working-directory: fake-ubuntu-advantage-tools
+        run: ./buildPackage.sh
+
+      - name: Inspect package
+        id: meta
+        working-directory: fake-ubuntu-advantage-tools
+        run: |
+          dpkg-deb -I fake-ubuntu-advantage-tools.deb
+          dpkg-deb -c fake-ubuntu-advantage-tools.deb
+          echo "version=$(dpkg-deb -f fake-ubuntu-advantage-tools.deb Version)" >> "$GITHUB_OUTPUT"
+
+      - name: Check package contents
+        working-directory: fake-ubuntu-advantage-tools
+        run: |
+          contents=$(dpkg-deb -c fake-ubuntu-advantage-tools.deb)
+          if grep -q __pycache__ <<< "$contents"; then
+            echo "::error::package contains __pycache__"
+            exit 1
+          fi
+          if awk '$2 != "root/root"' <<< "$contents" | grep -q .; then
+            echo "::error::package contains files not owned by root/root"
+            exit 1
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fake-ubuntu-advantage-tools
+          path: fake-ubuntu-advantage-tools/fake-ubuntu-advantage-tools.deb
+          if-no-files-found: error
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    container: ubuntu:${{ matrix.ubuntu }}
+    strategy:
+      fail-fast: false
+      matrix:
+        ubuntu: ["22.04", "24.04", "26.04"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: fake-ubuntu-advantage-tools
+          path: dist
+
+      - name: Test install
+        run: ./test_install.sh dist/fake-ubuntu-advantage-tools.deb
+
+  release:
+    needs: [build, test]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      VERSION: ${{ needs.build.outputs.version }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: fake-ubuntu-advantage-tools
+
+      - name: Check tag matches package version
+        run: |
+          if [ "$GITHUB_REF_NAME" != "v$VERSION" ]; then
+            echo "::error::tag $GITHUB_REF_NAME does not match package version $VERSION"
+            exit 1
+          fi
+
+      - name: Create release
+        run: |
+          gh release create "$GITHUB_REF_NAME" fake-ubuntu-advantage-tools.deb \
+            -R "$GITHUB_REPOSITORY" \
+            --verify-tag \
+            --title "fake-ubuntu-advantage-tools $GITHUB_REF_NAME" \
+            --generate-notes
